@@ -4,15 +4,15 @@ import { lazy, Suspense } from "react";
 import Header from "./component/Header";
 
 // Lazy load pages for mobile loading
-const HeroSlider = lazy(() => import("./component/Swiper.jsx"));
-const FetchProducts = lazy(() => import("./component/FetchedProducts.jsx"));
-const ProductView = lazy(() => import("./component/ProductView.jsx"));
-const Cart = lazy(() => import("./component/Cart.jsx"));
-const Checkout = lazy(() => import("./component/Checkout.jsx"));
-const Login = lazy(() => import("./component/Login.jsx"));
-const Signup = lazy(() => import("./component/SignUp.jsx"));
-const About = lazy(() => import("./component/About.jsx"));
-const Footer = lazy(() => import('./component/Footer.jsx'))
+const HeroSlider = lazy(() => import("./component/Swiper"));
+const FetchProducts = lazy(() => import("./component/FetchedProducts"));
+const ProductView = lazy(() => import("./component/ProductView"));
+const Cart = lazy(() => import("./component/Cart"));
+const Checkout = lazy(() => import("./component/Checkout"));
+const Login = lazy(() => import("./component/Login"));
+const Signup = lazy(() => import("./component/SignUp"));
+const About = lazy(() => import("./component/About"));
+const Footer = lazy(() => import('./component/Footer'))
 
 function App() {
   return (

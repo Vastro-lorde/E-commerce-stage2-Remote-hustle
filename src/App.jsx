@@ -13,6 +13,7 @@ const Login = lazy(() => import("./component/Login"));
 const Signup = lazy(() => import("./component/SignUp"));
 const About = lazy(() => import("./component/About"));
 const Footer = lazy(() => import('./component/Footer'))
+const Search = lazy(() => import('./component/Search'))
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
               <Footer />
             </>
           } />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </Suspense>
     </>

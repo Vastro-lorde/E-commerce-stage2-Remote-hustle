@@ -6,7 +6,7 @@ export default function ProductCard({
     handlePrev,
     isLoading,
 }) {
-    const { addToCart } = useCart();
+    const { showMsg, addToCart } = useCart();
 
     return (
         <div className="w-full bg-black max-w-9xl mx-auto p-4">
@@ -21,6 +21,11 @@ export default function ProductCard({
                             key={product.id}
                             className="border bg-white/90 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
                         >
+                            {showMsg && (
+                                <div className="fixed z-60 top-20 right-5 bg-green-600 text-white px-4 py-2 rounded shadow-lg transition">
+                                    product added to cart
+                                </div>
+                            )}
                             <img
                                 src={product.thumbnail}
                                 alt={product.title}

@@ -6,7 +6,7 @@ export default function ProductView() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
-    const { addToCart } = useCart()
+    const { showMsg, addToCart } = useCart()
 
     
     useEffect(() => {
@@ -29,6 +29,11 @@ export default function ProductView() {
 
     return (
         <div className="max-w-4xl mx-auto p-6 mt-28 flex flex-col md:flex-row gap-6 bg-white rounded shadow-md">
+            {showMsg && (
+                                <div className="fixed z-60 top-20 right-5 bg-green-600 text-white px-4 py-2 rounded shadow-lg transition">
+                                    product added to cart
+                                </div>
+                            )}
             <img
                 src={product.thumbnail}
                 alt={product.title}

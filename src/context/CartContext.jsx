@@ -9,6 +9,7 @@ export const useCart = () => useContext(CartContext);
 export const CartProvider = ({ children }) => {
     const { user } = useAuth();
     const [cart, setCart] = useState([]);
+    const [showMsg, setShowMsg] = useState(false);
 
     // Load cart from Firestore if user logged in
     useEffect(() => {
@@ -23,6 +24,11 @@ export const CartProvider = ({ children }) => {
 
     const addToCart = async (product) => {
         const newCart = [...cart, product];
+        //sending message about new image added
+        setShowMsg(true)
+        setTimeout(()=>{
+            setShowMsg(false)
+        },3000)
         setCart(newCart);
         if (user) {
             await setDoc(doc(db, "carts", user.uid), { items: newCart });
@@ -39,7 +45,7 @@ export const CartProvider = ({ children }) => {
         if (user) await setDoc(doc(db, "carts", user.uid), { items: newCart });
     };
     return (
-        <CartContext.Provider value={{ cart, addToCart, clearCart, removeFromCart }}>
+        <CartContext.Provider value={{ showMsg, cart, addToCart, clearCart, removeFromCart }}>
             {children}
         </CartContext.Provider>
     );

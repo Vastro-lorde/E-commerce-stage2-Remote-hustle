@@ -19,6 +19,7 @@ export default function Header() {
         e.preventDefault();
         if (!search.trim()) return;
         navigate(`/search?q=${search}`);
+        setIsopen(false)
     };
 
     return (

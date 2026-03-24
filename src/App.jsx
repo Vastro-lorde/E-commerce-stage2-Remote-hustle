@@ -33,7 +33,12 @@ function App() {
               </>
             }
           />
-          <Route path="/product/:id" element={<ProductView />} />
+          <Route path="/product/:id" element={
+            <>
+              <ProductView />
+              <Footer />
+            </>
+          } />
           <Route path="/cart" element={<Cart />} />
           <Route path="/Checked" element={<Checkout />} />
           <Route path="/login" element={<Login />} />

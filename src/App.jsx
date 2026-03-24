@@ -8,7 +8,7 @@ const HeroSlider = lazy(() => import("./component/Swiper"));
 const FetchProducts = lazy(() => import("./component/FetchedProducts"));
 const ProductView = lazy(() => import("./component/ProductView"));
 const Cart = lazy(() => import("./component/Cart"));
-const Checkout = lazy(() => import("./component/Checkout"));
+const Checkout = lazy(() => import("./component/CheckOut"));
 const Login = lazy(() => import("./component/Login"));
 const Signup = lazy(() => import("./component/SignUp"));
 const About = lazy(() => import("./component/About"));

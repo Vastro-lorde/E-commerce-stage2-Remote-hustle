@@ -18,8 +18,9 @@ export default function Header() {
     const handleSearch = (e) => {
         e.preventDefault();
         if (!search.trim()) return;
+          setIsOpen(false)
         navigate(`/search?q=${search}`);
-        setIsopen(false)
+      
     };
 
     return (

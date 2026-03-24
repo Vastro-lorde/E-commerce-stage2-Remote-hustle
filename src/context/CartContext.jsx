@@ -28,7 +28,7 @@ export const CartProvider = ({ children }) => {
         setShowMsg(true)
         setTimeout(()=>{
             setShowMsg(false)
-        },3000)
+        },1000)
         setCart(newCart);
         if (user) {
             await setDoc(doc(db, "carts", user.uid), { items: newCart });

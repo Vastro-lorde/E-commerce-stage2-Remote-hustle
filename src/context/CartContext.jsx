@@ -23,18 +23,39 @@ export const CartProvider = ({ children }) => {
     }, [user]);
 
     const addToCart = async (product) => {
-        const newCart = [...cart, product];
-        //sending message about new image added
+        // const newCart = [...cart, product];
+
+        const existing = cart.find(item => item.id === product.id);
+
+        let newCart;
+
+        if (existing) {
+            newCart = cart.map(item =>
+                item.id === product.id
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            );
+        } else {
+            newCart = [...cart, { ...product, quantity: 1 }];
+        }
         setShowMsg(true)
-        setTimeout(()=>{
+        setTimeout(() => {
             setShowMsg(false)
-        },1000)
+        }, 3000)
         setCart(newCart);
         if (user) {
             await setDoc(doc(db, "carts", user.uid), { items: newCart });
         }
     };
 
+    const decreaseQuantity = async (productId) => {
+        const newCart = cart.map((item) => item.id === productId ? { ...item, quantity: item.quantity - 1 } : item).filter(item => item.quantity > 0)
+        setCart(newCart)
+
+        if (user) {
+            await setDoc(doc(db, "carts", user.uid), { items: newCart })
+        }
+    }
     const clearCart = async () => {
         setCart([]);
         if (user) await setDoc(doc(db, "carts", user.uid), { items: [] });
@@ -45,7 +66,7 @@ export const CartProvider = ({ children }) => {
         if (user) await setDoc(doc(db, "carts", user.uid), { items: newCart });
     };
     return (
-        <CartContext.Provider value={{ showMsg, cart, addToCart, clearCart, removeFromCart }}>
+        <CartContext.Provider value={{ showMsg, cart, addToCart, clearCart, removeFromCart, decreaseQuantity }}>
             {children}
         </CartContext.Provider>
     );

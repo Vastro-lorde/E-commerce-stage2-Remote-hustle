@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-
+import { HiPlus, HiMinus } from 'react-icons/hi'
 
 export default function Cart() {
-    const { cart, clearCart, removeFromCart } = useCart();
+    const {showMsg, decreaseQuantity, cart, clearCart, removeFromCart } = useCart();
 
     const totalPrice = cart.reduce((total, item) => total + item.price, 0);
 
@@ -25,6 +25,12 @@ export default function Cart() {
                         key={index}
                         className="flex flex-col md:flex-row border rounded shadow p-4 gap-4 items-center"
                     >
+                        
+            {showMsg && (
+                <div className="fixed z-60 top-20 right-5 bg-green-600 text-white px-4 py-2 rounded shadow-lg transition">
+                    product added to cart
+                </div>
+            )}
                         <img
                             src={product.thumbnail}
                             alt={product.title}
@@ -35,12 +41,21 @@ export default function Cart() {
                             <p className="text-gray-600 line-clamp-2">{product.description}</p>
                             <p className="text-blue-600 font-bold mt-2">${product.price}</p>
                         </div>
-                        <button
-                            onClick={() => removeFromCart(product.id)}
-                            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
-                        >
-                            Remove
-                        </button>
+                         <div className="grid grid-col-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                            <button className="text-green-400 lg-shadow" onClick={() => decreaseQuantity(product.id)}>
+                                <HiMinus size={24} />
+                            </button>
+                            <span className="text-center text-green-400 rounded-full font-semibold">{product.quantity}</span>
+                            <button className="text-green-400 lg-shadow" onClick={() => addToCart(product)}>
+                                <HiPlus size={24} />
+                            </button>
+                            <button
+                                onClick={() => removeFromCart(product.id)}
+                                className=" bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
+                            >
+                                Remove
+                            </button>
+                        </div>
                     </div>
                 ))}
             </div>

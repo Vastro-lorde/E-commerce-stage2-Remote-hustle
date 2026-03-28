@@ -14,7 +14,12 @@ export default function Header() {
     const { cart } = useCart();
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
+// quantity tracking
 
+      const totalQuantity = cart.reduce((total, item) => {
+        return total + item.quantity
+    }, 0)
+    
     const handleSearch = (e) => {
         e.preventDefault();
         if (!search.trim()) return;
@@ -49,9 +54,9 @@ export default function Header() {
                     <Link to="/about" className="hover:text-white transition" onClick={() => setAccount(false)}>About</Link>
                     <Link to="/cart" className="relative flex items-center hover:text-white transition" onClick={() => setAccount(false)}>
                         <MdShoppingCart size={24} className="mr-1" /> Cart
-                        {cart.length > 0 && (
+                        {totalQuantity > 0 && (
                             <span className="absolute -top-2 -right-3 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">
-                                {cart.length}
+                                {totalQuantity}
                             </span>
                         )}
                     </Link>
@@ -93,9 +98,9 @@ export default function Header() {
                     <Link to="/about" onClick={() => setIsOpen(false)} className="text-green-400 hover:text-white transition">About</Link>
                     <Link to="/cart" onClick={() => setIsOpen(false)} className="relative flex items-center text-green-400 hover:text-white transition">
                         Cart
-                        {cart.length > 0 && (
+                     {totalQuantity > 0 && (
                             <span className="absolute -top-2 -right-3 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">
-                                {cart.length}
+                                {totalQuantity}
                             </span>
                         )}
                     </Link>

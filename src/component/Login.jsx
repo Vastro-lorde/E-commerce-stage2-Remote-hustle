@@ -71,7 +71,7 @@ export default function Login() {
             alert("Login successful ✅");
             navigate("/");
         } catch (err) {
-            alert(err.message);
+            alert("Login Unsuccessful);
         }
     };
 

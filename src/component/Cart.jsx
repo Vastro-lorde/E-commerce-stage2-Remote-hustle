@@ -3,7 +3,7 @@ import { useCart } from "../context/CartContext";
 import { HiPlus, HiMinus } from 'react-icons/hi'
 
 export default function Cart() {
-    const {showMsg, decreaseQuantity, cart, clearCart, removeFromCart } = useCart();
+    const {showMsg, decreaseQuantity, addToCart, cart, clearCart, removeFromCart } = useCart();
 
     const totalPrice = cart.reduce((total, item) => total + item.price, 0);
 

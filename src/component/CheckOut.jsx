@@ -58,6 +58,7 @@ export default function Checkout() {
                             <div>
                                 <h3 className="font-semibold">{item.title}</h3>
                                 <p className="text-gray-600">${item.price}</p>
+                                <p  className="text-gray-600">Quantity: {item.quantity}</p>
                             </div>
                         </div>
                     </div>

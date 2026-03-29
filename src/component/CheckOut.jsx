@@ -6,8 +6,10 @@ export default function Checkout() {
     const { cart, clearCart } = useCart();
     const { user } = useAuth();
     const navigate = useNavigate();
-
-    const totalPrice = cart.reduce((total, item) => total + item.price, 0);
+ const totalQuantity = cart.reduce((total, item) => {
+        return total + item.quantity
+    }, 0)
+    const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
     const handleCheckout = () => {
         if (!user) {
@@ -66,7 +68,7 @@ export default function Checkout() {
             <div className="w-full md:w-1/3 bg-white rounded-lg shadow p-6 flex flex-col gap-6">
                 <h2 className="text-2xl font-bold text-green-600">Summary</h2>
                 <p className="text-gray-700">
-                    Items: <span className="font-semibold">{cart.length}</span>
+                    Items: <span className="font-semibold">{totalQuantity}</span>
                 </p>
                 <p className="text-gray-700">
                     Total: <span className="font-semibold">${totalPrice.toFixed(2)}</span>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import image from '../assets/internet.png'
 import { Form } from "react-router-dom";
 import ProductCard from "./ProductCard";
 export default function FetchProducts() {
@@ -30,12 +30,14 @@ export default function FetchProducts() {
 
     if (errorMsg) {
         return <div>
-             <div style="display:block; margin-left:auto; margin-right:auto; width:200px; height:200px;"><img
-            src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/noconnection/default_400.png"
-            srcset="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/noconnection/default_800.png" id="no-connection"
-            width="200px" height="200px" alt="No connection found."></div>
-                 <p className="text-red-500 text-center mt-5">Something went wrong, try again</p>;
-        </div>
+            <div style={{ display: "block",  marginLeft: "auto",  marginRight: "auto", width: "200px", height: "200px", justifyContent:"center",  }}><img
+                src={image} id="no-connection" 
+                width="200px" height="200px" alt="No connection found." />
+
+            </div>
+
+            <p className="text-red-500 text-center mt-5">Something went wrong, try again</p>
+        </div>;
     }
     {/* function for handling next skip of dummy data*/ }
     function handleNext() {

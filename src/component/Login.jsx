@@ -69,7 +69,7 @@ export default function Login() {
         try {
             await login(email, password);
             alert("Login successful ✅");
-            navigate("/");
+            navigate("/cart");
         } catch (err) {
             alert("Login Unsuccessful");
         }
@@ -116,7 +116,7 @@ export default function Login() {
                         onClick={() => setShowPassword(!showPassword)}
                         className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-600"
                     >
-                        {showPassword ? <HiEyeOff size={22} /> : <HiEye size={22} />}
+                        {showPassword ? <HiEye size={22} /> : <HiEyeOff size={22} />}
                     </button>
                 </div>
 

@@ -69,7 +69,7 @@ export default function Login() {
         try {
             await login(email, password);
             alert("Login successful ✅");
-            navigate("/cart");
+            navigate("/");
         } catch (err) {
             alert("Login Unsuccessful");
         }

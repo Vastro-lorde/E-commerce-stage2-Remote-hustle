@@ -61,7 +61,7 @@ export default function Cart() {
             </div>
 
             <div className="mt-6 flex justify-between items-center">
-                <p className="text-xl font-bold">Total: ${totalPrice}</p>
+                <p className="text-xl font-bold">Total: ${totalPrice.toFixed(2)}</p>
                 <div className="flex gap-4">
                     <button
                         onClick={clearCart}

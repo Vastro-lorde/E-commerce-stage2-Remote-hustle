@@ -39,7 +39,7 @@ export default function Cart() {
                         <div className="flex-1 flex flex-col">
                             <h3 className="text-lg font-semibold">{product.title}</h3>
                             <p className="text-gray-600 line-clamp-2">{product.description}</p>
-                            <p className="text-blue-600 font-bold mt-2">${product.price}</p>
+                            <p className="text-blue-600 font-bold mt-2">${product.price * product.quantity}</p>
                         </div>
                          <div className="grid grid-col-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                             <button className="text-green-400 lg-shadow" onClick={() => decreaseQuantity(product.id)}>

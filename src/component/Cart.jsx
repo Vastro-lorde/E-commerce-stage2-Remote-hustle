@@ -5,7 +5,7 @@ import { HiPlus, HiMinus } from 'react-icons/hi'
 export default function Cart() {
     const {showMsg, decreaseQuantity, addToCart, cart, clearCart, removeFromCart } = useCart();
 
-    const totalPrice = cart.reduce((total, item) => total + item.price, 0);
+    const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
     if (cart.length === 0) {
         return (

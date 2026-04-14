@@ -1,27 +1,28 @@
 import { useEffect, useState } from "react";
 import image from '../assets/internet.png'
-import { Form } from "react-router-dom";
 import ProductCard from "./ProductCard";
+
+const LIMIT = 48;
+
 export default function FetchProducts() {
     const [isLoading, setIsLoading] = useState(false);
     const [dummyData, setDummyData] = useState([]);
     const [errorMsg, setErrorMsg] = useState("");
-    const [count, setCount] = useState(0)
-
-
+    const [count, setCount] = useState(0);
+    const [total, setTotal] = useState(0);
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
                 setIsLoading(true);
-                const response = await fetch(`https://dummyjson.com/products?limit=48&skip=${count === 0 ? 0 * 10 : count * 10}`);
+                const response = await fetch(`https://dummyjson.com/products?limit=${LIMIT}&skip=${count * LIMIT}`);
                 const data = await response.json();
 
                 setDummyData(data.products);
+                setTotal(data.total);
                 setIsLoading(false);
             } catch (err) {
                 setIsLoading(false);
-
                 setErrorMsg(err.message || "Something went wrong");
             }
         };
@@ -39,27 +40,26 @@ export default function FetchProducts() {
             <p className="text-red-500 text-center mt-5">Something went wrong, try again</p>
         </div>;
     }
-    {/* function for handling next skip of dummy data*/ }
-    function handleNext() {
-        setCount(count + 1)
 
+    function handleNext() {
+        setCount((prev) => prev + 1);
     }
-    {/* function for handling previous skip of dummy data*/ }
+
     function handlePrev() {
-        setCount((prevCount) => {
-            if (prevCount <= 0) return 0;
-            return prevCount - 1;
-        });
+        setCount((prev) => Math.max(0, prev - 1));
     }
+
+    const hasMore = (count + 1) * LIMIT < total;
+    const hasPrev = count > 0;
 
     return (
-
         <ProductCard
             products={dummyData}
             isLoading={isLoading}
             handleNext={handleNext}
             handlePrev={handlePrev}
+            hasMore={hasMore}
+            hasPrev={hasPrev}
         />
-
     );
 }

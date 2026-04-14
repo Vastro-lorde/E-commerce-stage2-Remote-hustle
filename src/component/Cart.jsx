@@ -3,7 +3,7 @@ import { useCart } from "../context/CartContext";
 import { HiPlus, HiMinus } from 'react-icons/hi'
 
 export default function Cart() {
-    const {showMsg, decreaseQuantity, addToCart, cart, clearCart, removeFromCart } = useCart();
+    const { decreaseQuantity, addToCart, cart, clearCart, removeFromCart } = useCart();
 
     const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
@@ -25,12 +25,6 @@ export default function Cart() {
                         key={index}
                         className="flex flex-col md:flex-row border rounded shadow p-4 gap-4 items-center"
                     >
-                        
-            {showMsg && (
-                <div className="fixed z-60 top-20 right-5 bg-green-600 text-white px-4 py-2 rounded shadow-lg transition">
-                    product added to cart
-                </div>
-            )}
                         <img
                             src={product.thumbnail}
                             alt={product.title}

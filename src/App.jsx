@@ -2,6 +2,7 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Header from "./component/Header";
+import { useCart } from "./context/CartContext";
 
 // Lazy load pages for mobile loading
 const HeroSlider = lazy(() => import("./component/Swiper"));
@@ -14,11 +15,22 @@ const Signup = lazy(() => import("./component/SignUp"));
 const About = lazy(() => import("./component/About"));
 const Footer = lazy(() => import('./component/Footer'))
 const Search = lazy(() => import('./component/Search'))
+const OrderHistory = lazy(() => import('./component/OrderHistory'))
+const NotFound = lazy(() => import('./component/NotFound'))
 
 function App() {
+  const { showMsg } = useCart();
+
   return (
     <>
       <Header />
+
+      {/* Global toast */}
+      {showMsg && (
+        <div className="fixed top-20 right-4 z-50 bg-green-500 text-white px-4 py-2 rounded shadow-lg animate-pulse">
+          Item added to cart!
+        </div>
+      )}
 
       {/* A wrapers for all lazy components */}
       <Suspense fallback={<p className="text-center mt-20">Loading...</p>}>
@@ -50,6 +62,8 @@ function App() {
             </>
           } />
           <Route path="/search" element={<Search />} />
+          <Route path="/orders" element={<OrderHistory />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </>

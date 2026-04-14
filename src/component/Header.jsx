@@ -64,6 +64,7 @@ export default function Header() {
                         <button onClick={() => setAccount(!account)} className="hover:text-white transition">Account</button>
                         {account && (
                             <div className="absolute right-0 mt-2 w-36 bg-black/90 rounded shadow-lg flex flex-col gap-2 p-2">
+                                <Link to="/orders" onClick={() => setAccount(false)} className="flex items-center gap-2 px-2 py-1 hover:bg-green-500 rounded text-green-400 hover:text-white/80">Orders</Link>
                                 {!user && <Link to="/login" className="flex items-center gap-2 px-2 py-1 hover:bg-green-500 rounded text-green-400 hover:text-white/80"><HiLogin size={20} />Login</Link>}
                                 {user && <button onClick={logout} className="flex items-center gap-2 px-2 py-1 hover:bg-red-500 rounded text-green-400 hover:text-white/80"><MdLogout size={20} />Logout</button>}
                                 {!user && <Link to="/signup" className="flex items-center gap-2 px-2 py-1 hover:bg-green-500 rounded text-green-400 hover:text-white/80"><HiUserAdd size={20} />SignUp</Link>}
@@ -104,6 +105,7 @@ export default function Header() {
                             </span>
                         )}
                     </Link>
+                    <Link to="/orders" onClick={() => setIsOpen(false)} className="text-green-400 hover:text-white transition">Order History</Link>
                     <div className="flex flex-col gap-2">
                         {!user && <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center gap-2 px-2 py-1 justify-center text-green-400 hover:bg-green-500 rounded hover:text-white"><HiLogin size={20} />Login</Link>}
                         {user && <button onClick={logout} className="justify-center flex items-center gap-2 px-2 py-1 text-green-400 hover:bg-red-500 rounded hover:text-white"><MdLogout size={20} />Logout</button>}

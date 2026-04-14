@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { db } from "../firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { addOrder } from "../ordersDB";
 
 export default function Checkout() {
     const { cart, clearCart } = useCart();
@@ -39,7 +38,6 @@ export default function Checkout() {
                 items: cart.map(({ id, title, price, quantity, thumbnail }) => ({ id, title, price, quantity, thumbnail })),
                 total: totalPrice,
                 status: "pending",
-                createdAt: serverTimestamp(),
             };
 
             if (user) {
@@ -51,7 +49,7 @@ export default function Checkout() {
                 orderData.guestAddress = guestAddress.trim();
             }
 
-            await addDoc(collection(db, "orders"), orderData);
+            await addOrder(orderData);
             clearCart();
             alert(`Order placed successfully! Total: $${totalPrice.toFixed(2)}`);
             navigate("/");

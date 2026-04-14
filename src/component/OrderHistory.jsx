@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { db } from "../firebase";
-import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
+import { getOrdersByUserId, getOrdersByEmail } from "../ordersDB";
 import { Link } from "react-router-dom";
 
 export default function OrderHistory() {
@@ -10,20 +9,23 @@ export default function OrderHistory() {
     const [loading, setLoading] = useState(false);
     const [guestEmail, setGuestEmail] = useState("");
     const [searched, setSearched] = useState(false);
+    const [error, setError] = useState("");
 
     // Fetch orders for logged-in user automatically
     useEffect(() => {
         if (!user) return;
         setLoading(true);
+        setError("");
         const fetchOrders = async () => {
-            const q = query(
-                collection(db, "orders"),
-                where("userId", "==", user.uid),
-                orderBy("createdAt", "desc")
-            );
-            const snap = await getDocs(q);
-            setOrders(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
-            setLoading(false);
+            try {
+                const results = await getOrdersByUserId(user.uid);
+                setOrders(results);
+            } catch (err) {
+                console.error(err);
+                setError("Unable to load orders. Please try again later.");
+            } finally {
+                setLoading(false);
+            }
         };
         fetchOrders();
     }, [user]);
@@ -34,14 +36,16 @@ export default function OrderHistory() {
         if (!guestEmail.trim()) return;
         setLoading(true);
         setSearched(true);
-        const q = query(
-            collection(db, "orders"),
-            where("guestEmail", "==", guestEmail.trim().toLowerCase()),
-            orderBy("createdAt", "desc")
-        );
-        const snap = await getDocs(q);
-        setOrders(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
-        setLoading(false);
+        setError("");
+        try {
+            const results = await getOrdersByEmail(guestEmail);
+            setOrders(results);
+        } catch (err) {
+            console.error(err);
+            setError("Unable to look up orders. Please try again later.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -66,6 +70,8 @@ export default function OrderHistory() {
                     </form>
                 )}
 
+                {error && <p className="text-center text-red-500 mb-4">{error}</p>}
+
                 {loading && <p className="text-center text-gray-500">Loading orders...</p>}
 
                 {!loading && orders.length === 0 && (user || searched) && (
@@ -79,8 +85,8 @@ export default function OrderHistory() {
                     <div key={order.id} className="bg-white rounded-lg shadow p-4 mb-4">
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm text-gray-500">
-                                {order.createdAt?.toDate?.()
-                                    ? order.createdAt.toDate().toLocaleDateString("en-US", {
+                                {order.createdAt
+                                    ? new Date(order.createdAt).toLocaleDateString("en-US", {
                                           year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"
                                       })
                                     : "N/A"}
